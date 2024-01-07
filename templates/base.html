@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-primary text-white text-center py-3" style="width: 100%;">
+        {% block header %}{% endblock %}
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Панель навигации -->
+            <div class="col-md-3 bg-light">
+                <div class="d-flex flex-column align-items-start py-3">
+                    <!-- Логика авторизации -->
+                    {% if user.is_authenticated %}
+                        <p>Привет, {{ user.username }}!</p>
+                        <a href="{% url 'logout' %}" class="btn btn-danger mb-2">Выход</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-primary mb-2">Вход</a>
+                        <a href="{% url 'register' %}" class="btn btn-secondary">Регистрация</a>
+                    {% endif %}
+                    <!-- Дополнительные ссылки -->
+                    {% block navigation %}{% endblock %}
+                </div>
+            </div>
+
+            <!-- Основной контент -->
+            <div class="col-md-9">
+                <div class="py-3">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключение Bootstrap JS и зависимостей -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
